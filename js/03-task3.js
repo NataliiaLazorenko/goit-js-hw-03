@@ -6,18 +6,47 @@
  */
 
 const findBestEmployee = function (employees) {
-  'use strict';
+  ('use strict');
   // Write code under this line
 
-  const keys = Object.keys(employees);
+  // method 1
+  // const keys = Object.keys(employees);
 
-  let maxCompletedTasks = 0;
+  // let maxCompletedTasks = 0;
+  // let bestEmployee = '';
+
+  // for (const key of keys) {
+  //   if (employees[key] > maxCompletedTasks) {
+  //     maxCompletedTasks = employees[key];
+  //     bestEmployee = key;
+  //   }
+  // }
+
+  // return bestEmployee;
+
+  // method 2
+  // const keys = Object.keys(employees);
+  // const values = Object.values(employees);
+
+  // let bestEmployee = '';
+
+  // for (const key of keys) {
+  //   if (employees[key] === Math.max(...values)) {
+  //     bestEmployee = key;
+  //   }
+  // }
+
+  // return bestEmployee;
+
+  // method 3
+  const entries = Object.entries(employees);
+  const values = Object.values(employees);
+
   let bestEmployee = '';
 
-  for (const key of keys) {
-    if (employees[key] > maxCompletedTasks) {
-      maxCompletedTasks = employees[key];
-      bestEmployee = key;
+  for (const entry of entries) {
+    if (entry[1] === Math.max(...values)) {
+      bestEmployee = entry[0];
     }
   }
 
