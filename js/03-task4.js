@@ -18,7 +18,7 @@ const countTotalSalary = function (employees) {
   return totalSalary;
 };
 
-// Объекты и ожидаемый результат
+// Об'єкти і очікуваний результат
 const developers = {
   mango: 300,
   poly: 250,

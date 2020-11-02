@@ -30,7 +30,7 @@ const account = {
    * Приймає суму і тип транзакції.
    */
   createTransaction(amount, type) {
-    let operation = {
+    const operation = {
       id: (id += 1),
       type,
       amount,
@@ -47,9 +47,9 @@ const account = {
    */
   deposit(amount) {
     this.balance += amount;
-    console.log(
-      `Сума поповнення: ${amount}, баланс після поповнення: ${this.balance}`,
-    );
+    // console.log(
+    //   `Сума поповнення: ${amount}, баланс після поповнення: ${this.balance}`,
+    // );
 
     const operationDeposit = this.createTransaction(
       amount,
@@ -70,13 +70,15 @@ const account = {
    */
   withdraw(amount) {
     if (amount > this.balance) {
-      return console.log(
+      console.log(
         'Недостатньо коштів на рахунку, виконання операції неможливе',
       );
+
+      return;
     }
 
     this.balance -= amount;
-    console.log(`Знято: ${amount}, баланс після зняття: ${this.balance}`);
+    // console.log(`Знято: ${amount}, баланс після зняття: ${this.balance}`);
 
     const operationWithdraw = this.createTransaction(
       amount,
@@ -90,7 +92,7 @@ const account = {
    * Метод повертає поточний баланс
    */
   getBalance() {
-    console.log('Поточний баланс: ', this.balance);
+    // console.log('Поточний баланс: ', this.balance);
     return this.balance;
   },
 
@@ -98,14 +100,24 @@ const account = {
    * Метод шукає і повертає об'єкт транзакції по id
    */
   getTransactionDetails(id) {
-    for (const transaction of this.transactions) {
-      if (transaction.id === id) {
-        console.log(`Операція з id = ${id}: `, transaction);
-        return transaction;
-      }
-    }
+    // перебір класичним циклом for
+    // for (const transaction of this.transactions) {
+    //   if (transaction.id === id) {
+    //     console.log(`Операція з id = ${id}: `, transaction);
+    //     return transaction;
+    //   }
+    // }
 
-    console.log(`Операції з id = ${id} не існує`);
+    // console.log(`Операції з id = ${id} не існує`);
+
+    // з використанням методу Array.prototype.find()
+    const transactionToFind = this.transactions.find(item => item.id === id);
+
+    transactionToFind
+      ? console.log(`Операція з id = ${id}: `, transactionToFind)
+      : console.log(`Операції з id = ${id} не існує`);
+
+    return transactionToFind;
   },
 
   /*
@@ -113,16 +125,30 @@ const account = {
    * певного типу транзакції з усієї історії транзакцій
    */
   getTransactionTotal(type) {
-    let totalAmount = 0;
+    // let totalAmount = 0;
 
-    for (const transaction of this.transactions) {
-      if (transaction.type === type) {
-        totalAmount += transaction.amount;
-      }
-    }
+    // перебір класичним циклом for
+    // for (const transaction of this.transactions) {
+    //   if (transaction.type === type) {
+    //     totalAmount += transaction.amount;
+    //   }
+    // }
 
-    console.log(`Загальна сума операцій ${type}: `, totalAmount);
-    return totalAmount;
+    // перебір через Array.prototype.forEach()
+    // this.transactions.forEach(item => {
+    //   if (item.type === type) {
+    //     totalAmount += item.amount;
+    //   }
+    // });
+
+    // console.log(`Загальна сума операцій ${type}: `, totalAmount);
+    // return totalAmount;
+
+    // через Array.prototype.reduce()
+    return this.transactions.reduce(
+      (acc, item) => (item.type === type ? acc + item.amount : acc),
+      0,
+    );
   },
 };
 
